@@ -11,6 +11,7 @@ from binance_f.model.constant import *
 # For develop
 from binance_f.base.printobject import *
 
+
 class SubscriptionClient(object):
 
     def __init__(self, **kwargs):

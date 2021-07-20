@@ -91,6 +91,7 @@ class WebsocketConnection:
             self.ws.close()
             self.ws = None
         self.delay_in_second = delay_in_second
+        if debug:
         self.logger.warning("[Sub][" + str(self.id) + "] Reconnecting after "
                             + str(self.delay_in_second) + " seconds later")
 

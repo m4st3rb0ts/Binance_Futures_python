@@ -14,6 +14,7 @@ from binance_f.exception.binanceapiexception import BinanceApiException
 from binance_f.impl.utils import *
 from binance_f.base.printobject import *
 from binance_f.model.constant import *
+from binance_f.options import kDebug
 # Key: ws, Value: connection
 websocket_connection_handler = dict()
 
@@ -56,11 +57,13 @@ def websocket_func(*args):
                                                     on_close=on_close)
     global websocket_connection_handler
     websocket_connection_handler[connection_instance.ws] = connection_instance
-    connection_instance.logger.info("[Sub][" + str(connection_instance.id) + "] Connecting...")
+    if kDebug:
+        connection_instance.logger.info("[Sub][" + str(connection_instance.id) + "] Connecting...")
     connection_instance.delay_in_second = -1
     connection_instance.ws.on_open = on_open
     connection_instance.ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
-    connection_instance.logger.info("[Sub][" + str(connection_instance.id) + "] Connection event loop down")
+    if kDebug:
+        connection_instance.logger.info("[Sub][" + str(connection_instance.id) + "] Connection event loop down")
     if connection_instance.state == ConnectionState.CONNECTED:
         connection_instance.state = ConnectionState.IDLE
 
@@ -91,19 +94,22 @@ class WebsocketConnection:
             self.ws.close()
             self.ws = None
         self.delay_in_second = delay_in_second
-        self.logger.warning("[Sub][" + str(self.id) + "] Reconnecting after "
-                            + str(self.delay_in_second) + " seconds later")
+        if kDebug:
+            self.logger.warning("[Sub][" + str(self.id) + "] Reconnecting after "
+                                + str(self.delay_in_second) + " seconds later")
 
     def re_connect(self):
         if self.delay_in_second != 0:
             self.delay_in_second -= 1
-            self.logger.warning("In delay connection: " + str(self.delay_in_second))
+            if kDebug:
+                self.logger.warning("In delay connection: " + str(self.delay_in_second))
         else:
             self.connect()
 
     def connect(self):
         if self.state == ConnectionState.CONNECTED:
-            self.logger.info("[Sub][" + str(self.id) + "] Already connected")
+            if kDebug:
+                self.logger.info("[Sub][" + str(self.id) + "] Already connected")
         else:
             self.__thread = threading.Thread(target=websocket_func, args=[self])
             self.__thread.start()
@@ -115,10 +121,12 @@ class WebsocketConnection:
         self.ws.close()
         del websocket_connection_handler[self.ws]
         self.__watch_dog.on_connection_closed(self)
-        self.logger.error("[Sub][" + str(self.id) + "] Closing normally")
+        if kDebug:
+            self.logger.error("[Sub][" + str(self.id) + "] Closing normally")
 
     def on_open(self, ws):
-        self.logger.info("[Sub][" + str(self.id) + "] Connected to server")
+        if kDebug:
+            self.logger.info("[Sub][" + str(self.id) + "] Connected to server")
         self.ws = ws
         self.last_receive_time = get_current_timestamp()
         self.state = ConnectionState.CONNECTED
@@ -129,13 +137,13 @@ class WebsocketConnection:
 
     def on_error(self, error_message):
         if self.request.error_handler is not None:
-            print('error')
             exception = BinanceApiException(BinanceApiException.SUBSCRIPTION_ERROR, error_message)
             self.request.error_handler(exception)
-        self.logger.error("[Sub][" + str(self.id) + "] " + str(error_message))
+        
+        if kDebug:
+            self.logger.error("[Sub][" + str(self.id) + "] " + str(error_message))
 
     def on_failure(self, error):
-        print('on_failure')
         self.on_error("Unexpected error: " + str(error))
         self.close_on_error()
 
@@ -200,4 +208,5 @@ class WebsocketConnection:
         if self.ws is not None:
             self.ws.close()
             self.state = ConnectionState.CLOSED_ON_ERROR
-            self.logger.error("[Sub][" + str(self.id) + "] Connection is closing due to error")
+            if kDebug:
+                self.logger.error("[Sub][" + str(self.id) + "] Connection is closing due to error")
