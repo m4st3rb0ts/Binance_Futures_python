@@ -243,7 +243,6 @@ class WebsocketRequestImpl(object):
         check_should_not_none(symbol, "symbol")
         check_should_not_none(limit, "limit")
         check_should_not_none(callback, "callback")
-        #print(update_time)
         def subscription_handler(connection):
             connection.send(book_depth_channel(symbol, limit, update_time))
             time.sleep(0.01)
@@ -290,8 +289,6 @@ class WebsocketRequestImpl(object):
             time.sleep(0.01)
 
         def json_parse(json_wrapper):
-            print("event type: ", json_wrapper.get_string("e"))
-            print(json_wrapper)
             if(json_wrapper.get_string("e") == "ACCOUNT_UPDATE"):
                 result = AccountUpdate.json_parse(json_wrapper)
             elif(json_wrapper.get_string("e") == "ORDER_TRADE_UPDATE"):
