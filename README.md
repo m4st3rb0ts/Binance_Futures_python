@@ -4,9 +4,6 @@ This is Binance Futures Python SDK, a lightweight python library. You can import
 
 The SDK supports both synchronous RESTful API invoking and subscribing the market data and the user's private data from the websocket connection.
 
-## Update log
->1.1.0
->Add binance_d for delivery futures
 
 ## Table of Contents
 
@@ -24,13 +21,6 @@ For Beta version, please import the source code directly.
 ```Python
 import binance_f  # For perpetual swap
 ```
-
-```Python
-import binance_d  # For delivery futures
-```
-
-The example code is in python3/example.
-
 
 To install by source code, run below command
 

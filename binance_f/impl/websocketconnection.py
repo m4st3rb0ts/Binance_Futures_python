@@ -14,7 +14,7 @@ from binance_f.exception.binanceapiexception import BinanceApiException
 from binance_f.impl.utils import *
 from binance_f.base.printobject import *
 from binance_f.model.constant import *
-from binance_f.options import kDebug
+
 # Key: ws, Value: connection
 websocket_connection_handler = dict()
 
