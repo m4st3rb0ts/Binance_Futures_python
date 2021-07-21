@@ -2,8 +2,7 @@
 
 This is Binance Futures Python SDK, a lightweight python library. You can import to your python project and use this SDK to query all market data, trading and manage your account.
 
-The SDK supports both synchronous RESTful API invoking and subscribing the market data and the user's private data from the websocket connection.
-
+The SDK supports both synchronous RESTful API invoking and subscribing the market data and the user's private data from the websocket connection.s
 
 ## Table of Contents
 
