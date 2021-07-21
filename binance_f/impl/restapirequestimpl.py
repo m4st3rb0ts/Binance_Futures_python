@@ -32,12 +32,6 @@ class RestApiRequestImpl(object):
         request.header.update({'Content-Type': 'application/json'})
         request.header.update({"X-MBX-APIKEY": self.__api_key})
         request.url = url + "?" + builder.build_url()
-         # For develop
-        if kDebug:
-            print("====== Request ======")
-            print(request)
-            PrintMix.print_data(request)
-            print("=====================")
         return request
 
     def __create_request_by_post_with_signature(self, url, builder):
@@ -51,12 +45,6 @@ class RestApiRequestImpl(object):
         request.header.update({"X-MBX-APIKEY": self.__api_key})
         request.post_body = builder.post_map
         request.url = url + "?" + builder.build_url()
-        # For develop
-        if kDebug:
-            print("====== Request ======")
-            print(request)
-            PrintMix.print_data(request)
-            print("=====================")
         return request
 
     def __create_request_by_delete_with_signature(self, url, builder):
@@ -69,12 +57,6 @@ class RestApiRequestImpl(object):
         request.header.update({'Content-Type': 'application/json'})
         request.header.update({"X-MBX-APIKEY": self.__api_key})
         request.url = url + "?" + builder.build_url()
-        # For develop
-        if kDebug:
-            print("====== Request ======")
-            print(request)
-            PrintMix.print_data(request)
-            print("=====================")
         return request
 
     def __create_request_by_get_with_signature(self, url, builder):
@@ -87,12 +69,6 @@ class RestApiRequestImpl(object):
         request.header.update({"Content-Type": "application/x-www-form-urlencoded"})
         request.header.update({"X-MBX-APIKEY": self.__api_key})
         request.url = url + "?" + builder.build_url()
-        # For develop
-        if kDebug:
-            print("====== Request ======")
-            print(request)
-            PrintMix.print_data(request)
-            print("=====================")
         return request
 
     def __create_request_by_put_with_signature(self, url, builder):
@@ -105,12 +81,6 @@ class RestApiRequestImpl(object):
         request.header.update({'Content-Type': 'application/json'})
         request.header.update({"X-MBX-APIKEY": self.__api_key})
         request.url = url + "?" + builder.build_url()
-        # For develop
-        if kDebug:
-            print("====== Request ======")
-            print(request)
-            PrintMix.print_data(request)
-            print("=====================")
         return request
         
     def get_servertime(self):

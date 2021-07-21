@@ -200,7 +200,6 @@ class SubscriptionClient(object):
 
         Stream Names: <symbol>@depth<levels> OR <symbol>@depth<levels>@100ms.
         """
-        # print(update_time)
         request = self.websocket_request_impl.subscribe_book_depth_event(symbol, limit, update_time, callback, error_handler)
         self.__create_connection(request)
 
